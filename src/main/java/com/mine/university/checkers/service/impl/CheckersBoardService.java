@@ -1,70 +1,89 @@
 package com.mine.university.checkers.service.impl;
 
-import com.google.common.collect.Lists;
+import com.mine.university.checkers.model.Move;
 import com.mine.university.checkers.model.Piece;
+import com.mine.university.checkers.model.Point;
+import com.mine.university.checkers.model.impl.BoardPoint;
 import com.mine.university.checkers.model.impl.CheckersBoard;
 import com.mine.university.checkers.service.BoardService;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.mine.university.checkers.model.impl.Checkers.AVAILABLE_POSITION_COUNT;
-import static com.mine.university.checkers.model.impl.Checkers.PIECES_IN_ROW;
+import static com.mine.university.checkers.model.impl.Checkers.TOTAL_ROWS;
 
 public class CheckersBoardService implements BoardService {
 
-    private static final int AVAILABLE_POSITIONS = 32;
-
-    private static final double ZERO_WEIGHT = 0.0d;
+    private static final String EMPTY_ELEMENT = "   ";
 
     @Override
-    public CheckersBoard getAvailableMoves(CheckersBoard board) {
-        return null;
+    public List<Move> getAvailableMoves(CheckersBoard board) {
+        List<Piece<Point>> pieces = board.getPieces();
+        List<Move> moves = new ArrayList<>();
+        pieces.stream().forEach(piece -> {
+
+        });
+        return moves;
     }
 
     @Override
     public double[] boardAsVector(CheckersBoard board) {
-        List<Integer> positions = board.getPieces().stream().map(Piece::getPosition).collect(Collectors.toList());
-        List<Piece<Integer>> pieces = board.getPieces();
-        double[] vector = new double[32];
-        for (int i = 0; i < AVAILABLE_POSITIONS; i++) {
-            if (positions.contains(i)) {
-                vector[i] = pieces.get(i).getWeight();
-            }
-        }
-        return vector;
+        return new double[] {};
     }
 
     @Override
-    public String getBoardAsString(CheckersBoard board) {
-        double[] vector = boardAsVector(board);
-        StringBuilder builder = new StringBuilder();
-        List<Piece<Integer>> pieces = board.getPieces();
-        List<Piece<Integer>> copied = Lists.newArrayList(pieces);
-        Collections.reverse(copied);
-        List<List<String>> boardStringParts = new ArrayList<>();
-        boardStringParts.add(getBoardHeader());
-        for (int i = 0; i < AVAILABLE_POSITION_COUNT / PIECES_IN_ROW; i++) {
-            List<List<String>> rowAsString = new ArrayList<>();
-
+    public String boardAsString(CheckersBoard board) {
+        Map<Point, Piece<Point>> pieces = board.getPieces()
+                .stream()
+                .collect(Collectors.toMap(Piece::getPosition, piece -> piece));
+        List<List<String>> rows = new ArrayList<>();
+        rows.add(getBoardHeader());
+        for (int i = 0; i < TOTAL_ROWS; i++) {
+            List<String> row = new ArrayList<>();
+            row.add(StringUtils.SPACE + String.valueOf(i + 1) + StringUtils.SPACE);
+            for (int j = 'A'; j <= 'H'; j++) {
+                Point point = new BoardPoint(i, j);
+                if (pieces.containsKey(point)) {
+                    Piece<Point> piece = pieces.get(point);
+                    row.add(weightAsString(piece.getWeight()));
+                } else {
+                    row.add(EMPTY_ELEMENT);
+                }
+            }
+            row.add(StringUtils.SPACE + String.valueOf(TOTAL_ROWS - i));
+            rows.add(row);
         }
-        int pieceCount = 0;
-        for (Piece<Integer> piece : copied) {
-            pieceCount++;
-            boardStringParts.add(null);
+        List<String> boardHeader = getBoardHeader();
+        Collections.reverse(boardHeader);
+        rows.add(boardHeader);
+        StringBuilder builder = new StringBuilder();
+        Collections.reverse(rows);
+        for (List<String> row : rows) {
+            builder.append(String.join(StringUtils.EMPTY, row)).append(System.lineSeparator());
         }
         return builder.toString();
+    }
+
+    private String weightAsString(double weight) {
+        if (weight != 1 && weight != -1) {
+            return weight >= 0 ? " K " : "-K ";
+        } else {
+            return weight >= 0 ? " 1 " : "-1 ";
+        }
     }
 
     private List<String> getBoardHeader() {
         List<Character> boardHeader = new ArrayList<>();
         //Need leading whitespace to maintain board consistency.
         boardHeader.add(' ');
-        for (int i = 'A'; i < 'H'; i++) {
+        for (int i = 'A'; i <= 'H'; i++) {
             boardHeader.add((char) i);
         }
-        return boardHeader.stream().map(String::valueOf).collect(Collectors.toList());
+        boardHeader.add(' ');
+        return boardHeader.stream().map(character -> StringUtils.SPACE + String.valueOf(character) + StringUtils.SPACE).collect(Collectors.toList());
     }
 }

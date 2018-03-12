@@ -1,9 +1,9 @@
 package com.mine.university.checkers.model;
 
-public interface Move<T> {
+public interface Move {
 
-    Piece<T> getFrom();
+    Point getFrom();
 
-    Piece<T> getTo();
+    Point getTo();
 
 }

@@ -1,20 +1,21 @@
 package com.mine.university.checkers.model.impl;
 
 import com.mine.university.checkers.model.Piece;
+import com.mine.university.checkers.model.Point;
 
-public class CheckerPiece implements Piece<Integer> {
+public class CheckerPiece implements Piece<Point> {
 
-    private final int position;
+    private final Point position;
 
     private final double weight;
 
-    public CheckerPiece(int position, int weight) {
+    public CheckerPiece(Point position, double weight) {
         this.position = position;
         this.weight = weight;
     }
 
     @Override
-    public Integer getPosition() {
+    public Point getPosition() {
         return position;
     }
 
