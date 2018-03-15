@@ -5,4 +5,6 @@ public interface Piece<T> {
     T getPosition();
 
     double getWeight();
+
+    MoveStrategy getMoveStrategy();
 }

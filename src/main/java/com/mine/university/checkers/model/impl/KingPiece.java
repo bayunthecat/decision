@@ -2,9 +2,10 @@ package com.mine.university.checkers.model.impl;
 
 import com.mine.university.checkers.model.Point;
 
-public class CheckerPiece extends AbstractPiece {
+public class KingPiece extends AbstractPiece {
 
-    public CheckerPiece(Point position, double weight) {
+    public KingPiece(Point position, double weight) {
         super(position, weight);
     }
+
 }

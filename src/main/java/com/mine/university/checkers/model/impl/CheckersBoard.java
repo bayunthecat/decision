@@ -45,11 +45,6 @@ public class CheckersBoard implements Board<Point> {
         return Collections.unmodifiableList(pieces);
     }
 
-    @Override
-    public void reset() {
-        //
-    }
-
     private void initBoard() {
         int pieceWeight = 1;
         for (int i = 0; i < TOTAL_ROWS; i++) {

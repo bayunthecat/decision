@@ -1,9 +1,13 @@
 package com.mine.university.checkers.model;
 
-public interface Move {
+/**
+ * An abstraction that provides move of a piece.
+ * @param <T> denotes underlying positioning system, whether it's standard two dimensional system or a custom one.
+ */
+public interface Move<T> {
 
-    Point getFrom();
+    T getFrom();
 
-    Point getTo();
+    T getTo();
 
 }

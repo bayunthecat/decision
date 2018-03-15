@@ -1,11 +1,9 @@
-package com.mine.university.checkers.service.impl;
+package com.mine.university.checkers;
 
-import com.mine.university.checkers.model.Move;
+import com.mine.university.checkers.model.Board;
 import com.mine.university.checkers.model.Piece;
 import com.mine.university.checkers.model.Point;
 import com.mine.university.checkers.model.impl.BoardPoint;
-import com.mine.university.checkers.model.impl.CheckersBoard;
-import com.mine.university.checkers.service.BoardService;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -16,27 +14,11 @@ import java.util.stream.Collectors;
 
 import static com.mine.university.checkers.model.impl.Checkers.TOTAL_ROWS;
 
-public class CheckersBoardService implements BoardService {
+public class CheckersUtils {
 
-    private static final String EMPTY_ELEMENT = "   ";
+    private static final String EMPTY_ELEMENT = StringUtils.repeat(StringUtils.SPACE, 3);
 
-    @Override
-    public List<Move> getAvailableMoves(CheckersBoard board) {
-        List<Piece<Point>> pieces = board.getPieces();
-        List<Move> moves = new ArrayList<>();
-        pieces.stream().forEach(piece -> {
-
-        });
-        return moves;
-    }
-
-    @Override
-    public double[] boardAsVector(CheckersBoard board) {
-        return new double[] {};
-    }
-
-    @Override
-    public String boardAsString(CheckersBoard board) {
+    public static String boardAsString(Board<Point> board) {
         Map<Point, Piece<Point>> pieces = board.getPieces()
                 .stream()
                 .collect(Collectors.toMap(Piece::getPosition, piece -> piece));
@@ -63,12 +45,12 @@ public class CheckersBoardService implements BoardService {
         StringBuilder builder = new StringBuilder();
         Collections.reverse(rows);
         for (List<String> row : rows) {
-            builder.append(String.join(StringUtils.EMPTY, row)).append(System.lineSeparator());
+            builder.append(String.join(StringUtils.EMPTY, row).trim()).append(System.lineSeparator());
         }
         return builder.toString();
     }
 
-    private String weightAsString(double weight) {
+    private static String weightAsString(double weight) {
         if (weight != 1 && weight != -1) {
             return weight >= 0 ? " K " : "-K ";
         } else {
@@ -76,7 +58,7 @@ public class CheckersBoardService implements BoardService {
         }
     }
 
-    private List<String> getBoardHeader() {
+    private static List<String> getBoardHeader() {
         List<Character> boardHeader = new ArrayList<>();
         //Need leading whitespace to maintain board consistency.
         boardHeader.add(' ');
@@ -86,4 +68,5 @@ public class CheckersBoardService implements BoardService {
         boardHeader.add(' ');
         return boardHeader.stream().map(character -> StringUtils.SPACE + String.valueOf(character) + StringUtils.SPACE).collect(Collectors.toList());
     }
+
 }

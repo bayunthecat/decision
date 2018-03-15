@@ -5,6 +5,4 @@ import java.util.List;
 public interface Board<T> {
 
     List<Piece<T>> getPieces();
-
-    void reset();
 }

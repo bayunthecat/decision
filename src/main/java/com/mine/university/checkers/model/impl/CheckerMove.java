@@ -3,7 +3,7 @@ package com.mine.university.checkers.model.impl;
 import com.mine.university.checkers.model.Move;
 import com.mine.university.checkers.model.Point;
 
-public class CheckerMove implements Move {
+public class CheckerMove implements Move<Point> {
 
     private final Point from, to;
 
