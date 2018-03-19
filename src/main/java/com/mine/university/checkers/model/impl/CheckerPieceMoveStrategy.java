@@ -1,5 +1,6 @@
 package com.mine.university.checkers.model.impl;
 
+import com.mine.university.checkers.model.Board;
 import com.mine.university.checkers.model.MoveStrategy;
 import com.mine.university.checkers.model.Point;
 
@@ -23,16 +24,24 @@ public class CheckerPieceMoveStrategy implements MoveStrategy<Point> {
         if (xPoint - 1 > 0 && yPoint + 1 <= ySize) {
             possiblePoint.add(new BoardPoint(xPoint - 1, yPoint + 1));
         }
+        return possiblePoint;
+    }
+
+    @Override
+    public List<Point> getAttackingMoves(Point position, Board<Point> board) {
+        int xSize = Checkers.TOTAL_ROWS, ySize = Checkers.TOTAL_ROWS,
+                xPoint = position.getX(), yPoint = position.getY();
+        List<Point> attackingMoves = new ArrayList<>();
         //Check south-east
         if (xPoint + 1 <= xSize && yPoint - 1 > 0) {
             Point to = new BoardPoint(xPoint + 1, yPoint - 1);
-            possiblePoint.add(new BoardPoint(xPoint + 1, yPoint - 1));
+            attackingMoves.add(new BoardPoint(xPoint + 1, yPoint - 1));
         }
         //Check south-west
         if (xPoint - 1 > 0 && yPoint - 1 > 0) {
             Point to = new BoardPoint(xPoint - 1, yPoint - 1);
-            possiblePoint.add(new BoardPoint(xPoint - 1, yPoint - 1));
+            attackingMoves.add(new BoardPoint(xPoint - 1, yPoint - 1));
         }
-        return possiblePoint;
+        return attackingMoves;
     }
 }

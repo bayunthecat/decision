@@ -36,7 +36,7 @@ public class CheckersBoardProcessor implements BoardProcessor<Point> {
 
     private void fillAvailableMoves(Point fromPoint, Piece<Point> piece, Map<Point, Piece<Point>> pieces, List<Move<Point>> moves) {
         MoveStrategy<Point> moveStrategy = moveStrategies.get(piece.getClass());
-        Objects.requireNonNull(moveStrategy, "Move strategy is null!");
+        Objects.requireNonNull(moveStrategy, "Move strategy is null! Probably misconfiguration.");
         List<Point> points = moveStrategy.getPossibleMoves(fromPoint);
         for (Point toPoint : points) {
             Piece<Point> boardPiece = pieces.get(toPoint);

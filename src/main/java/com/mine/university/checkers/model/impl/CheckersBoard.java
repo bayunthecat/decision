@@ -7,10 +7,10 @@ import com.mine.university.checkers.model.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import static com.mine.university.checkers.model.impl.Checkers.AVAILABLE_POSITIONS_COUNT;
-import static com.mine.university.checkers.model.impl.Checkers.SKIP_ROWS;
-import static com.mine.university.checkers.model.impl.Checkers.TOTAL_ROWS;
+import static com.mine.university.checkers.model.impl.Checkers.*;
 
 /**
  * Implementation of a board for standard pieces game. Basic board has the following view
@@ -43,6 +43,13 @@ public class CheckersBoard implements Board<Point> {
     @Override
     public List<Piece<Point>> getPieces() {
         return Collections.unmodifiableList(pieces);
+    }
+
+    @Override
+    public Map<Point, Piece<Point>> getPointToPiecesMap() {
+        //think of caching mechanism that encapsulates current state and corresponding map
+        return getPieces().stream()
+                .collect(Collectors.toMap(Piece::getPosition, piece -> piece));
     }
 
     private void initBoard() {
