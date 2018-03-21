@@ -14,5 +14,6 @@ public interface Move<T> {
 
     List<Piece<T>> removedPieces();
 
-    
+    void addPieceToRemove(Piece<T> piece);
+
 }
