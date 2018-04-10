@@ -5,7 +5,7 @@ import com.mine.university.checkers.model.Piece;
 import com.mine.university.checkers.model.Point;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -33,32 +33,32 @@ import static com.mine.university.checkers.model.impl.Checkers.*;
  */
 public class CheckersBoard implements Board<Point> {
 
-    private final List<Piece<Point>> pieces;
+    private final Map<Point, Piece<Point>> pieces;
 
     public CheckersBoard() {
-        this.pieces = new ArrayList<>(AVAILABLE_POSITIONS_COUNT);
+        this.pieces = new HashMap<>(AVAILABLE_POSITIONS_COUNT);
         initBoard();
     }
 
     @Override
     public List<Piece<Point>> getPieces() {
-        return Collections.unmodifiableList(pieces);
+        return new ArrayList<>(pieces.values());
     }
 
     @Override
     public Map<Point, Piece<Point>> getPointToPiecesMap() {
         //think of caching mechanism that encapsulates current state and corresponding map
-        return getPieces().stream()
-                .collect(Collectors.toMap(Piece::getPosition, piece -> piece));
+        return pieces;
     }
 
     private void initBoard() {
         int pieceWeight = 1;
         for (int i = 0; i < TOTAL_ROWS; i++) {
-            int start = i % 2 != 0 ? 'A' : 'B';
+            int start = i % 2 != 0 ? 'B' : 'A';
             for (int j = start; j <= 'H'; j += 2) {
                 if (!SKIP_ROWS.contains(i + 1)) {
-                    pieces.add(new CheckerPiece(new BoardPoint(i, j), pieceWeight));
+                    Point point = new BoardPoint(i, j);
+                    pieces.put(point, new CheckerPiece(point, pieceWeight));
                 } else {
                     //executes twice but i don't care
                     pieceWeight = -1;

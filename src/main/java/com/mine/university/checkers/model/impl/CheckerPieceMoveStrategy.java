@@ -5,11 +5,9 @@ import com.mine.university.checkers.model.Move;
 import com.mine.university.checkers.model.MoveStrategy;
 import com.mine.university.checkers.model.Point;
 
-import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
-@Singleton
 public class CheckerPieceMoveStrategy implements MoveStrategy<Point> {
 
     @Override

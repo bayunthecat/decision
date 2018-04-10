@@ -45,7 +45,7 @@ public class CheckersUtils {
         StringBuilder builder = new StringBuilder();
         Collections.reverse(rows);
         for (List<String> row : rows) {
-            builder.append(String.join(StringUtils.EMPTY, row).trim()).append(System.lineSeparator());
+            builder.append(String.join(StringUtils.EMPTY, row)).append(System.lineSeparator());
         }
         return builder.toString();
     }

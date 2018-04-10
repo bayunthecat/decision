@@ -11,4 +11,5 @@ public interface BoardProcessor<T> {
 
     double[] boardAsVector(Board<T> board);
 
+    void applyMove(Board<T> board, Move<T> move);
 }
