@@ -1,17 +1,15 @@
 package com.mine.university.core;
 
 import com.mine.university.core.impl.NetworkManager;
-import com.mine.university.core.impl.NeuralNode;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
+import org.neuroph.core.NeuralNetwork;
 
 public class TestNetworkCreation {
 
     @Test
     public void testNetworkCreation() {
-        List<NeuralNode> network = NetworkManager.build(32, 1, 91, 40, 10);
-        System.out.println(network);
+        NeuralNetwork neuralNetwork = NetworkManager.build(new int[] {32, 91, 40, 10, 1});
+        System.out.println(neuralNetwork);
     }
 
 }

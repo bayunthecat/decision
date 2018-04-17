@@ -1,5 +1,9 @@
 package com.mine.university.core.impl;
 
+import org.neuroph.core.Layer;
+import org.neuroph.core.NeuralNetwork;
+import org.neuroph.core.Neuron;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -46,6 +50,38 @@ public class NetworkManager {
             if (hidden[i] <= 0) {
                 throw new IllegalArgumentException(String.format("Hidden layer %s has 0 number of nodes", i));
             }
+        }
+    }
+
+    public static NeuralNetwork build(int[] neuronsPerLayer) {
+        NeuralNetwork neuralNetwork = new NeuralNetwork();
+        List<Layer> layers = new ArrayList<>();
+        for (int i = 0; i < neuronsPerLayer.length; i++) {
+            Layer layer = new Layer();
+            for (int j = 0; j < neuronsPerLayer[i]; j++) {
+                Neuron neuron = new Neuron();
+                layer.addNeuron(neuron);
+                if (i > 0) {
+                    addInputConnections(layers.get(i - 1), neuron);
+                }
+            }
+            layers.add(layer);
+            neuralNetwork.addLayer(layer);
+        }
+
+        return neuralNetwork;
+    }
+
+    private static void connectLayers(Layer layer, Layer anotherLayer) {
+        for (Neuron neuron : anotherLayer.getNeurons()) {
+            Neuron n = new Neuron();
+        }
+    }
+
+    private static void addInputConnections(Layer layer, Neuron neuron) {
+        for (Neuron previousLayerNeuron : layer.getNeurons()) {
+            //TODO rework to be able to read input from file
+            neuron.addInputConnection(previousLayerNeuron, new Random().nextDouble());
         }
     }
 }
