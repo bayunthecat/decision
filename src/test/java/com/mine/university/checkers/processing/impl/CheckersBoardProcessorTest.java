@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class CheckersBoardProcessorTest {
 
@@ -36,10 +35,5 @@ public class CheckersBoardProcessorTest {
         Map<Point, Piece<Point>> map = board.getPointToPiecesMap();
         Piece<Point> movedPiece = map.get(newPoint);
         assertEquals(newPoint, movedPiece.getPosition());
-    }
-
-    @Test
-    public void testApplyMoveWithRemovedPieces() {
-        fail("Not implemented yet");
     }
 }

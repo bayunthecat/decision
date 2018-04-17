@@ -2,7 +2,7 @@ package com.mine.university.core;
 
 import com.mine.university.core.impl.NetworkManager;
 import com.mine.university.core.impl.NeuralNode;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
