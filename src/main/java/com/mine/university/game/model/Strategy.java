@@ -5,10 +5,12 @@ import com.mine.university.checkers.model.Point;
 
 import java.util.List;
 
-public interface Strategy {
+public interface Strategy<T> {
 
     double evaluateBoard(Board<Point> board);
 
     double[] evaluateBoards(List<Board<Point>> boardList);
+
+    T getStrategyBasis();
 
 }

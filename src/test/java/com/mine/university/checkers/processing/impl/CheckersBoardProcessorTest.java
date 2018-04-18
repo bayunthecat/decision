@@ -31,8 +31,8 @@ public class CheckersBoardProcessorTest {
     public void testApplyMoveWithoutRemovedPieces() {
         Point newPoint = new BoardPoint(3, 'B');
         Move<Point> move = new CheckerMove(new BoardPoint(2, 'A'), newPoint);
-        boardProcessor.applyMove(board, move);
-        Map<Point, Piece<Point>> map = board.getPointToPiecesMap();
+        Board<Point> newBoard = boardProcessor.applyMove(board, move);
+        Map<Point, Piece<Point>> map = newBoard.getPointToPiecesMap();
         Piece<Point> movedPiece = map.get(newPoint);
         assertEquals(newPoint, movedPiece.getPosition());
     }

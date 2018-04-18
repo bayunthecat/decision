@@ -3,6 +3,7 @@ package com.mine.university.checkers.processing.impl;
 import com.mine.university.checkers.model.*;
 import com.mine.university.checkers.model.impl.CheckerPiece;
 import com.mine.university.checkers.model.impl.CheckerPieceMoveStrategy;
+import com.mine.university.checkers.model.impl.CheckersBoard;
 import com.mine.university.checkers.model.impl.KingPiece;
 import com.mine.university.checkers.processing.BoardProcessor;
 
@@ -42,7 +43,7 @@ public class CheckersBoardProcessor implements BoardProcessor<Point> {
     }
 
     @Override
-    public void applyMove(Board<Point> board, Move<Point> move) {
+    public Board<Point> applyMove(Board<Point> board, Move<Point> move) {
         validateMove(board, move);
         Map<Point, Piece<Point>> map = board.getPointToPiecesMap();
         Point from = move.getFrom();
@@ -50,6 +51,16 @@ public class CheckersBoardProcessor implements BoardProcessor<Point> {
         map.remove(move.getFrom());
         move.removedPieces().forEach(piece -> map.remove(piece.getPosition()));
         map.put(move.getTo(), new CheckerPiece(move.getTo(), pieceToMove.getWeight()));
+        return new CheckersBoard(map);
+    }
+
+    @Override
+    public List<Board<Point>> formParentBoards(Board<Point> board, List<Move<Point>> move) {
+        List<Board<Point>> boards = new ArrayList<>();
+        for (Move<Point> currentMove : move) {
+            boards.add(applyMove(board, currentMove));
+        }
+        return boards;
     }
 
     private void validateMove (Board<Point> board, Move<Point> move) {

@@ -7,7 +7,7 @@ import org.neuroph.core.NeuralNetwork;
 
 import java.util.List;
 
-public class NeuralNetworkBasedStrategy implements Strategy {
+public class NeuralNetworkBasedStrategy implements Strategy<NeuralNetwork> {
 
     private NeuralNetwork neuralNetwork = new NeuralNetwork();
 
@@ -25,5 +25,8 @@ public class NeuralNetworkBasedStrategy implements Strategy {
         return new double[0];
     }
 
-
+    @Override
+    public NeuralNetwork getStrategyBasis() {
+        return null;
+    }
 }

@@ -1,5 +1,6 @@
 package com.mine.university.checkers.model.impl;
 
+import com.google.common.collect.ImmutableMap;
 import com.mine.university.checkers.model.Board;
 import com.mine.university.checkers.model.Piece;
 import com.mine.university.checkers.model.Point;
@@ -40,6 +41,14 @@ public class CheckersBoard implements Board<Point> {
         initBoard();
     }
 
+    public CheckersBoard(Board<Point> board) {
+        this.pieces = new HashMap<>(board.getPointToPiecesMap());
+    }
+
+    public CheckersBoard(Map<Point, Piece<Point>> pieces) {
+        this.pieces = new HashMap<>(pieces);
+    }
+
     @Override
     public List<Piece<Point>> getPieces() {
         return new ArrayList<>(pieces.values());
@@ -48,7 +57,7 @@ public class CheckersBoard implements Board<Point> {
     @Override
     public Map<Point, Piece<Point>> getPointToPiecesMap() {
         //think of caching mechanism that encapsulates current state and corresponding map
-        return pieces;
+        return new HashMap<>(pieces);
     }
 
     private void initBoard() {
